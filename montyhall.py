@@ -1,8 +1,11 @@
 """ Simulate the Monty Hall 'paradox'."""
+
+from scipy.stats import rv_discrete
+from fractions import Fraction
+import sys
+
+
 if __name__ == '__main__':
-    from scipy.stats import rv_discrete
-    from fractions import Fraction
-    import sys
 
     class Doors:
         """ Assign values to doors and select them as per simulated strategy.
