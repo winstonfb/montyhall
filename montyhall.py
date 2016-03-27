@@ -20,7 +20,7 @@ if __name__ == '__main__':
             goat_door: A single randomly chosen discrete value from probability distribution over discrete values;
              the door in this position is opened to reveal a goat. Which is not a prize.
             selection: A list of valid door selections for the host to open.
-            choice_second: The player's final choice of doors, contigent on strategy
+            choice_second: The player's final choice of doors, contingent on strategy
              (0 -> stay with first choice. 1 -> switch to unopened door.)
 
         Note:
@@ -33,12 +33,12 @@ if __name__ == '__main__':
             self.values = [0, 0, 0]
             self.probs = [Fraction(1, 3)]*3
 
-            self.prize_door = rv_discrete(values=
+            self.prize_door = rv_discrete(name = 'prize_door_selection', values =
                 (range(len(self.values)), self.probs
                     )).rvs(size=1)
             self.values[self.prize_door[0]] = 1
             
-            self.choice_first = rv_discrete(values=
+            self.choice_first = rv_discrete(name = 'first_choice_selection', values =
                 (range(len(self.values)), self.probs
                     )).rvs(size=1)
 
@@ -60,7 +60,7 @@ if __name__ == '__main__':
             self.probs[self.prize_door[0]] = 0
             self.probs[self.choice_first[0]] = 0
 
-            self.goat_door = rv_discrete(values=
+            self.goat_door = rv_discrete(name = 'goat_door_selection', values=
                 (range(len(self.values)), self.probs
                     )).rvs(size=1)
         
@@ -106,6 +106,8 @@ if __name__ == '__main__':
             test.choose_door(strategy=y)
             trial_score = test.tally_score()
             total_score += trial_score
-        print('Strategy: %d, trials: %d, wins: %d' % (y, TRIALS, total_score))
-
-    print('Strategy 1 is to switch; strategy 0 is to not.')
+        win_percentage = '{0:.2f}'.format((float(total_score) / float(TRIALS)) * 100)
+        if y == 1: 
+            print("Strategy: switch doors | Trials: {0} | Wins: {1} ({2}%)".format(TRIALS, total_score, win_percentage))
+        else:
+            print("Strategy: don\'t switch | Trials: {0} | Wins: {1} ({2}%)".format(TRIALS, total_score, win_percentage))
